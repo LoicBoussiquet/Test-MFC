@@ -27,6 +27,7 @@ protected:
 	BOOL Checked;
 	bool Clicked;
 	CString TexteEditBox;
+	CComboBox* ComboBox;	
 
 	// Fonctions générées de la table des messages	
 	virtual BOOL OnInitDialog();
@@ -39,4 +40,6 @@ public:
 	afx_msg void OnBnClickedBtValider();
 	afx_msg void OnBnClickedCheckBox();
 	afx_msg void OnBnClickedRadioBox();	
+	afx_msg void OnBnClickedRadioBox2();
+	bool Clicked2;
 };

@@ -54,6 +54,7 @@ CTestMFCDlg::CTestMFCDlg(CWnd* pParent /*=NULL*/)
 	, Checked(FALSE)
 	, Clicked(false)
 	, TexteEditBox(_T(""))
+	, Clicked2(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -72,6 +73,7 @@ BEGIN_MESSAGE_MAP(CTestMFCDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BT_VALIDER, &CTestMFCDlg::OnBnClickedBtValider)
 	ON_BN_CLICKED(IDC_CHECK_BOX, &CTestMFCDlg::OnBnClickedCheckBox)
 	ON_BN_CLICKED(IDC_RADIO_BOX, &CTestMFCDlg::OnBnClickedRadioBox)
+	ON_BN_CLICKED(IDC_RADIO_BOX2, &CTestMFCDlg::OnBnClickedRadioBox2)
 END_MESSAGE_MAP()
 
 
@@ -107,6 +109,9 @@ BOOL CTestMFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Définir une petite icône
 
 	// TODO: ajoutez ici une initialisation supplémentaire
+	ComboBox = (CComboBox*) GetDlgItem(IDC_COMBO_BOX);
+	
+	ComboBox->AddString((LPCTSTR)"Ligne 1");
 
 	return TRUE;  // retourne TRUE, sauf si vous avez défini le focus sur un contrôle
 }
@@ -165,16 +170,30 @@ void CTestMFCDlg::OnBnClickedBtValider()
 {
 	UpdateData(FALSE);
 
-	TexteEditBox = "Valider";	
-
+	TexteEditBox = "Valider";
+		
 	if (Checked)
 	{
-		TexteEditBox += " Check box checked";
+		if (TexteEditBox.FindOneOf ("Check"))
+		{
+			TexteEditBox += " Check box checked";
+		}		
 	}
 
 	if (Clicked)
 	{
-		TexteEditBox += " Radio box checked";
+		if (TexteEditBox.FindOneOf ("Radio"))
+		{
+			TexteEditBox += " Radio box checked";
+		}		
+	}
+
+	if (Clicked2)
+	{
+		if (TexteEditBox.FindOneOf("Radio"))
+		{
+			TexteEditBox += " Radio box2 checked";
+		}
 	}
 }
 
@@ -190,9 +209,21 @@ void CTestMFCDlg::OnBnClickedCheckBox()
 
 void CTestMFCDlg::OnBnClickedRadioBox()
 {
-	if (Clicked == TRUE)
-		Clicked = FALSE;
-	else
+	if (Clicked != TRUE || Clicked2 == TRUE)
+	{
 		Clicked = TRUE;
+		Clicked2 = FALSE;
+	}
 }
 
+
+
+void CTestMFCDlg::OnBnClickedRadioBox2()
+{
+	if (Clicked2 != TRUE || Clicked == TRUE)
+	{
+		Clicked2 = TRUE;
+		Clicked = FALSE;
+	}
+		
+}
